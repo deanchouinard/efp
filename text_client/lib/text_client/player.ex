@@ -1,5 +1,7 @@
 defmodule TextClient.Player do
-
+  #
+  # Note the use of a struct as a form of type checking in the function signatures
+  #
   alias TextClient.{Mover, Prompter, State, Summary}
 
   def play(%State{tally: %{ game_state: :won }}) do
