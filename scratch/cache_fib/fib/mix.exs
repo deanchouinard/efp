@@ -1,12 +1,12 @@
-defmodule Dictionary.Mixfile do
+defmodule Fib.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :dictionary,
+      app: :fib,
       version: "0.1.0",
-      elixir: "~> 1.5",
-      start_permanent: Mix.env == :prod,
+      elixir: "~> 1.7",
+      start_permanent: Mix.env() == :prod,
       deps: deps()
     ]
   end
@@ -14,8 +14,8 @@ defmodule Dictionary.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {Dictionary.Application, []},
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Fib.Application, []}
     ]
   end
 
