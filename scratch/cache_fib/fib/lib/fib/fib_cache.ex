@@ -1,5 +1,5 @@
 
-defmodule Cache do
+defmodule Fib do
 
   @moduledoc """
   We implement a simple key/value cache. State is stored in an Agent, in
@@ -18,14 +18,14 @@ defmodule Cache do
   """
   
   def run(body) do
-    { :ok, pid } = Agent.start_link(fn -> %{ 0 => 0, 1 => 1 } end)
+    { :ok, pid } = Cache.start_link(fn -> %{ 0 => 0, 1 => 1 } end)
     result = body.(pid)
-    Agent.stop(pid)
+    Cache.stop(pid)
     result
   end
  
   def lookup(cache, n, if_not_found) do
-    Agent.get(cache, fn map -> map[n] end)
+    Cache.get(cache, fn map -> map[n] end)
     |> complete_if_not_found(cache, n, if_not_found)
   end
 
@@ -39,7 +39,7 @@ defmodule Cache do
   end
   
   defp set(val, cache, n) do
-    Agent.get_and_update(cache, fn map ->
+    Cache.get_and_update(cache, fn map ->
       { val, Map.put(map, n, val)}
     end)
   end
@@ -49,13 +49,13 @@ end
 defmodule CachedFib do
 
   def fib(n) do
-    Cache.run(fn cache ->
+    Fib.run(fn cache ->
       cached_fib(n, cache)
     end)
   end
 
   defp cached_fib(n, cache) do
-    Cache.lookup(cache, n, fn ->
+    Fib.lookup(cache, n, fn ->
       cached_fib(n-2, cache) + cached_fib(n-1, cache)
     end)
   end

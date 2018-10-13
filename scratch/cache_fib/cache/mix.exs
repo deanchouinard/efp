@@ -1,9 +1,9 @@
-defmodule Fib.MixProject do
+defmodule Cache.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :fib,
+      app: :cache,
       version: "0.1.0",
       elixir: "~> 1.7",
       start_permanent: Mix.env() == :prod,
@@ -15,14 +15,13 @@ defmodule Fib.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Fib.Application, []}
+      mod: {Cache.Application, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:cache, path: "../cache"},
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
     ]
