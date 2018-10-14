@@ -1,4 +1,3 @@
-
 defmodule Fib do
 
   @moduledoc """
@@ -18,28 +17,29 @@ defmodule Fib do
   """
   
   def run(body) do
-    { :ok, pid } = Cache.start_link(fn -> %{ 0 => 0, 1 => 1 } end)
-    result = body.(pid)
-    Cache.stop(pid)
+    # { :ok, pid } = Cache.start_link(fn -> %{ 0 => 0, 1 => 1 } end)
+    pid = Cache.init(fn _state -> %{ 0 => 0, 1 => 1 } end)
+    result = body.()
+    # Cache.stop(pid)
     result
   end
  
-  def lookup(cache, n, if_not_found) do
-    Cache.get(cache, fn map -> map[n] end)
-    |> complete_if_not_found(cache, n, if_not_found)
+  def lookup(n, if_not_found) do
+    Cache.get(fn map -> map[n] end)
+    |> complete_if_not_found(n, if_not_found)
   end
 
-  defp complete_if_not_found(nil, cache, n, if_not_found) do
+  defp complete_if_not_found(nil, n, if_not_found) do
     if_not_found.()
-    |> set(cache, n)
+    |> set(n)
   end
 
-  defp complete_if_not_found(value, _cache, _n, _if_not_found) do
+  defp complete_if_not_found(value, _n, _if_not_found) do
     value
   end
   
-  defp set(val, cache, n) do
-    Cache.get_and_update(cache, fn map ->
+  defp set(val, n) do
+    Cache.get_and_update(fn map ->
       { val, Map.put(map, n, val)}
     end)
   end
@@ -49,14 +49,14 @@ end
 defmodule CachedFib do
 
   def fib(n) do
-    Fib.run(fn cache ->
-      cached_fib(n, cache)
+    Fib.run(fn ->
+      cached_fib(n)
     end)
   end
 
-  defp cached_fib(n, cache) do
-    Fib.lookup(cache, n, fn ->
-      cached_fib(n-2, cache) + cached_fib(n-1, cache)
+  defp cached_fib(n) do
+    Fib.lookup(n, fn ->
+      cached_fib(n-2) + cached_fib(n-1)
     end)
   end
 

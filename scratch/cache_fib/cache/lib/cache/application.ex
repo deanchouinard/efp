@@ -10,6 +10,7 @@ defmodule Cache.Application do
     children = [
       # Starts a worker by calling: Cache.Worker.start_link(arg)
       # {Cache.Worker, arg},
+      {Cache, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
