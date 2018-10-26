@@ -7,12 +7,13 @@ defmodule Hangman.Application do
     import Supervisor.Spec
 
     children = [
-      worker(Hangman.Server, [])
+      #worker(Hangman.Server, [])
+      {DynamicSupervisor, strategy: :one_for_one, name: Hangman.DynamicSupervisor}
     ]
 
     options = [
       name: Hangman.Supervisor,
-      strategy: :simple_one_for_one,
+      strategy: :one_for_one,
       # max_restarts: 1,
     ]
 
