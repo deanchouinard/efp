@@ -9,6 +9,7 @@ defmodule Hangman.Server do
   end
 
   def init(_) do
+    IO.puts "Starting new game..."
     { :ok, Game.new_game() }
   end
 
@@ -22,4 +23,3 @@ defmodule Hangman.Server do
   end
 
 end
-
