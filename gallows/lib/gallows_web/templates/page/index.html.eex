@@ -1,4 +1,0 @@
-<h2><%= plural_of("egg", 1) %> </h2>
-<h2><%= plural_of("egg", 2) %> </h2>
-<h2><%= plural_of("egg", -2) %> </h2>
-<img src="<%= Routes.static_path(@conn, "/images/bbq.jpg") %>">
