@@ -1,14 +1,12 @@
-<%= inspect @tally %>
+<%= game_state(@tally.game_state) %>
 
-<p>
-  Turns left: <%= @tally.turns_left %>
-</p>
-
-<p>
-  Word so far: <%= word_so_far(@tally.letters) %>
-</p>
-
-<%= form_for(@conn, Routes.hangman_path(@conn, :make_move), [as: :make_move, method: :put], fn f -> %>
-  <%= text_input(f, :guess) %>
-  <%= submit("Make next move") %>
-<% end) %>
+<div class="container">
+  <div class="row">
+    <div class="column">
+      <%= render "_gallows.html", left: @tally.turns_left %>
+    </div>
+    <div class="column">
+      <%= render "_status.html", tally: @tally, conn: @conn %>
+    </div>
+  </div>
+</div>
