@@ -3,12 +3,15 @@ defmodule GallowsWeb.HangmanView do
 
   import GallowsWeb.Views.Helpers.GameStateHelper
 
+  def letters_used(letters), do: MapSet.to_list(letters) |> Enum.join(" ")
+
   def turn(left, target) when target >= left do
     "opacity: 1"
   end
 
   def turn(left, target) do
-    "opacity: 0.1"
+    # "opacity: 0.1"
+    "dim"
   end
 
   def game_over?(%{ game_state: game_state }) do

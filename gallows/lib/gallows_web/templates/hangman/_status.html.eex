@@ -5,6 +5,10 @@
 </p>
 
 <p>
+  Letters used: <%= letters_used(@tally.used) %>
+</p>
+
+<p>
   Word so far: <%= word_so_far(@tally.letters) %>
 </p>
 
